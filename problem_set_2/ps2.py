@@ -2,7 +2,7 @@
 # Graph optimization
 # Name: Aloisio Valério
 # Collaborators: None
-# Time: 1h40
+# Time: 2h
 
 #
 # Finding shortest paths through MIT buildings
