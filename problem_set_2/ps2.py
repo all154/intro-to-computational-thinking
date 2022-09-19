@@ -151,30 +151,6 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
     return the shortest path
     '''
 
-a = Node('a')
-b = Node('b')
-c = Node('c')
-
-a_b = WeightedEdge(a, b, 10, 5)
-b_c = WeightedEdge(b, c, 15, 2)
-a_c = WeightedEdge(a, c, 12, 8)
-
-test = Digraph()
-
-test.add_node(a)
-test.add_node(b)
-test.add_node(c)
-
-test.add_edge(a_b)
-test.add_edge(b_c)
-test.add_edge(a_c)
-
-print(test.has_node(a))
-print(test)
-print(test.get_edges_for_node(a))
-
-# print(get_best_path(test, a, b, [], 10, None, None))
-
 
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
