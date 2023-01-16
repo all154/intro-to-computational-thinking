@@ -74,8 +74,8 @@ def load_map(map_filename):
 
 # Problem 2c: Testing load_map
 # Include the lines used to test load_map below, but comment them out
-# test = load_map("test_load_map.txt")
-# print(test)
+test = load_map("test_load_map.txt")
+print(test)
 
 #
 # Problem 3: Finding the Shortest Path using Optimized Search Method
