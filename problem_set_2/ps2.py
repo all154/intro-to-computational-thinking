@@ -75,7 +75,7 @@ def load_map(map_filename):
 # Problem 2c: Testing load_map
 # Include the lines used to test load_map below, but comment them out
 test = load_map("test_load_map.txt")
-print(test)
+# print(test)
 
 #
 # Problem 3: Finding the Shortest Path using Optimized Search Method
@@ -125,13 +125,31 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
     """
     # TODO
     if (not (digraph.has_node(start) and digraph.has_node(end))):
-        raise ValueError
+        raise ValueError('Could not find node in digraph')
     elif start == end:
-        print("Update global variables appropriately - whatever that means - is it finishing the loop?")
+        return ([start.get_name()], 0, 0)
     else:
         for edge in digraph.get_edges_for_node(start):
             print('Do something, bro!')
-            # current_path = [[start.get_node(), ]]
+            #if edge.get_destination().get_name() is already in the list: break (avoid loop)
+            print(path[0])
+            print(edge.get_destination().get_name())
+            print(path[0].append(edge.get_destination().get_name()))
+            list_of_buildings = path[0].append(edge.get_destination().get_name())
+            total_distance_traveled = path[1] + int(edge.get_total_distance())
+            total_distance_outdoors = path[2] + int(edge.get_outdoor_distance())
+            #if total_distance_outdoors > max_dist_outdoors: break (avoid exceeding constraint)
+            current_path = (list_of_buildings, total_distance_traveled, total_distance_outdoors)
+
+            if edge.get_destination() == end:
+                if total_distance_traveled < best_dist:
+                    best_dist = total_distance_traveled
+                    best_path = list_of_buildings
+
+                    return current_path
+
+            #get_best_path(digraph, start, end, current_path, max_dist_outdoors, best_dist, best_path)
+
             # construct a path including that node
             # recursively solve the rest of the path, from the child node to the end node
     
@@ -150,7 +168,16 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
     
     return the shortest path
     '''
+# Testing get_best_path
+# get_best_path(test, Node("a"), Node("f"), None, None, None, None) #get ValueError
+simple_a = get_best_path(test, Node("a"), Node("a"), None, None, None, None)
+print(simple_a)
+simple_b = get_best_path(test, Node("b"), Node("b"), None, None, None, None)
+print(simple_b)
 
+simple_ab = get_best_path(test, Node("a"), Node("b"), simple_a, 10, 1000, None)
+print(simple_ab)
+print("Should be: (['a','b'], 10, 9)")
 
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
