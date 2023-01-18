@@ -130,23 +130,33 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
         return ([start.get_name()], 0, 0)
     else:
         for edge in digraph.get_edges_for_node(start):
-            print('Do something, bro!')
             #if edge.get_destination().get_name() is already in the list: break (avoid loop)
-            print(path[0])
-            print(edge.get_destination().get_name())
-            print(path[0].append(edge.get_destination().get_name()))
-            list_of_buildings = path[0].append(edge.get_destination().get_name())
+            print(best_dist)
+
+            if (path is None):
+                path = ([start.get_name()], 0, 0)
+            
+            list_of_buildings = path[0].copy()
+            print(list_of_buildings)
+            list_of_buildings.append(edge.get_destination().get_name())
+            print(list_of_buildings)
             total_distance_traveled = path[1] + int(edge.get_total_distance())
             total_distance_outdoors = path[2] + int(edge.get_outdoor_distance())
-            #if total_distance_outdoors > max_dist_outdoors: break (avoid exceeding constraint)
+            
+            if total_distance_outdoors > max_dist_outdoors:
+                break
+
             current_path = (list_of_buildings, total_distance_traveled, total_distance_outdoors)
 
             if edge.get_destination() == end:
-                if total_distance_traveled < best_dist:
+                if total_distance_traveled <= best_dist:
                     best_dist = total_distance_traveled
                     best_path = list_of_buildings
 
                     return current_path
+            else:
+                start = edge.get_destination()
+                get_best_path(digraph, start, end, current_path, max_dist_outdoors, best_dist, best_path)
 
             #get_best_path(digraph, start, end, current_path, max_dist_outdoors, best_dist, best_path)
 
@@ -176,8 +186,23 @@ simple_b = get_best_path(test, Node("b"), Node("b"), None, None, None, None)
 print(simple_b)
 
 simple_ab = get_best_path(test, Node("a"), Node("b"), simple_a, 10, 1000, None)
-print(simple_ab)
-print("Should be: (['a','b'], 10, 9)")
+print("Answer:    " + str(simple_ab))
+print("Should be: (['a', 'b'], 10, 9)")
+print("\n")
+
+non_ab = get_best_path(test, Node("a"), Node("b"), None, 5, 1000, None)
+print("Answer:    " + str(non_ab))
+print("Should be: None")
+print("\n")
+
+no_constraint_ac = get_best_path(test, Node("a"), Node("c"), None, 10, 1000, None)
+print("Answer:    " + str(no_constraint_ac))
+print("Should be: (['a', 'b', 'c'], 11, 10)")
+print("\n")
+
+constraint_ac = get_best_path(test, Node("a"), Node("c"), None, 5, 1000, None)
+print("Answer:    " + str(constraint_ac))
+print("Should be: (['a', 'c'], 12, 2)")
 
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
