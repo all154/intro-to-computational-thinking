@@ -2,7 +2,7 @@
 # Graph optimization
 # Name: Aloisio Valério
 # Collaborators: None
-# Time: 2h
+# Time: 5h
 
 #
 # Finding shortest paths through MIT buildings
@@ -124,84 +124,53 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
         max_dist_outdoors constraints, then return None.
     """
     # TODO
-    shortest_path = None
+    path = path + [start]
 
     if (not (digraph.has_node(start) and digraph.has_node(end))):
         raise ValueError('Could not find node in digraph')
     elif start == end:
         return ([start.get_name()], 0, 0)
-    else:
-        for edge in digraph.get_edges_for_node(start):
-            #if edge.get_destination().get_name() is already in the list: break (avoid loop)
-            print("Before: " + str(best_dist))
+    for edge in digraph.get_edges_for_node(start):
+        node = edge.get_destination()
+        if node not in path: #avoid cycles
+            if best_path == None or len(path) < len(best_path):
+                newPath = get_best_path(digraph, node, end, path, max_dist_outdoors, best_dist, best_path)
+                if newPath != None:
+                    best_path = newPath
+    return best_path
 
-            if (path is None):
-                path = ([start.get_name()], 0, 0)
-            
-            list_of_buildings = path[0].copy()
-            list_of_buildings.append(edge.get_destination().get_name())
-            print(list_of_buildings)
-            total_distance_traveled = path[1] + int(edge.get_total_distance())
-            total_distance_outdoors = path[2] + int(edge.get_outdoor_distance())
-            
-            if total_distance_outdoors > max_dist_outdoors:
-                continue
-
-            current_path = (list_of_buildings, total_distance_traveled, total_distance_outdoors)
-
-            if edge.get_destination() == end:
-                if total_distance_traveled <= best_dist:
-                    best_dist = total_distance_traveled
-                    best_path = list_of_buildings
-
-                    #return current_path
-                    shortest_path = current_path
-            else:
-                start = edge.get_destination()
-                get_best_path(digraph, start, end, current_path, max_dist_outdoors, best_dist, best_path)
-
-            print("After:" + str(best_dist))
-    
-        return shortest_path
-    '''
-    if start and end are not valid nodes:
-        raise an error
-    elif start and end are the same node:
-        update the global variables appropriately
-    else:
-        for all the child nodes of start
-            construct a path including that node
-            recursively solve the rest of the path, from the child node to the end node
-    
-    return the shortest path
-    '''
 # Testing get_best_path
 # get_best_path(test, Node("a"), Node("f"), None, None, None, None) #get ValueError
-'''
-simple_a = get_best_path(test, Node("a"), Node("a"), None, None, None, None)
-print(simple_a)
-simple_b = get_best_path(test, Node("b"), Node("b"), None, None, None, None)
-print(simple_b)
 
-simple_ab = get_best_path(test, Node("a"), Node("b"), simple_a, 10, 1000, None)
+simple_a = get_best_path(test, Node("a"), Node("a"), [], None, None, None)
+print("Answer:    " + str(simple_a))
+print("Should be: (['a'], 0, 0)")
+print("\n")
+
+simple_b = get_best_path(test, Node("b"), Node("b"), [], None, None, None)
+print("Answer:    " + str(simple_b))
+print("Should be: (['b'], 0, 0)")
+print("\n")
+
+simple_ab = get_best_path(test, Node("a"), Node("b"), [], 10, 1000, None)
 print("Answer:    " + str(simple_ab))
 print("Should be: (['a', 'b'], 10, 9)")
 print("\n")
 
-non_ab = get_best_path(test, Node("a"), Node("b"), None, 5, 1000, None)
+non_ab = get_best_path(test, Node("a"), Node("b"), [], 5, 1000, None)
 print("Answer:    " + str(non_ab))
 print("Should be: None")
 print("\n")
-'''
-no_constraint_ac = get_best_path(test, Node("a"), Node("c"), None, 10, 1000, None)
+
+no_constraint_ac = get_best_path(test, Node("a"), Node("c"), [], 10, 1000, None)
 print("Answer:    " + str(no_constraint_ac))
 print("Should be: (['a', 'b', 'c'], 11, 10)")
 print("\n")
-'''
-constraint_ac = get_best_path(test, Node("a"), Node("c"), None, 5, 1000, None)
+
+constraint_ac = get_best_path(test, Node("a"), Node("c"), [], 5, 1000, None)
 print("Answer:    " + str(constraint_ac))
 print("Should be: (['a', 'c'], 12, 2)")
-'''
+
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
     """
