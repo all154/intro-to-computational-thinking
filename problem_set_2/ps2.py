@@ -125,14 +125,34 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
     """
     # TODO
     path = path + [start]
+    #if dist is None:
+    dist = 0 #nulling here
+    #if outd_dist is None:
+    outd_dist = 0
+    str_path = []
 
     if (not (digraph.has_node(start) and digraph.has_node(end))):
         raise ValueError('Could not find node in digraph')
     elif start == end:
-        return ([start.get_name()], 0, 0)
+        if dist < best_dist:
+            best_dist = dist
+            print(dist)
+            print(best_dist)
+            for elem in path:
+                str_path.append(elem.get_name())
+            best_path = (str_path, best_dist)
+        # return ([start.get_name()], 0, 0)
     for edge in digraph.get_edges_for_node(start):
+        print(edge)
         node = edge.get_destination()
         if node not in path: #avoid cycles
+            dist += int(edge.get_total_distance())
+            print(dist)
+            outd_dist += int(edge.get_outdoor_distance())
+            
+            if best_dist < dist:
+                continue
+
             if best_path == None or len(path) < len(best_path):
                 newPath = get_best_path(digraph, node, end, path, max_dist_outdoors, best_dist, best_path)
                 if newPath != None:
@@ -142,19 +162,19 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
 # Testing get_best_path
 # get_best_path(test, Node("a"), Node("f"), None, None, None, None) #get ValueError
 
-simple_a = get_best_path(test, Node("a"), Node("a"), [], None, None, None)
+simple_a = get_best_path(test, Node("a"), Node("a"), [], 1000, 1000, None)
 print("Answer:    " + str(simple_a))
-print("Should be: (['a'], 0, 0)")
+print("Should be: (['a'], 0)")
 print("\n")
 
-simple_b = get_best_path(test, Node("b"), Node("b"), [], None, None, None)
+simple_b = get_best_path(test, Node("b"), Node("b"), [], 1000, 1000, None)
 print("Answer:    " + str(simple_b))
-print("Should be: (['b'], 0, 0)")
+print("Should be: (['b'], 0)")
 print("\n")
 
 simple_ab = get_best_path(test, Node("a"), Node("b"), [], 10, 1000, None)
 print("Answer:    " + str(simple_ab))
-print("Should be: (['a', 'b'], 10, 9)")
+print("Should be: (['a', 'b'], 10)")
 print("\n")
 
 non_ab = get_best_path(test, Node("a"), Node("b"), [], 5, 1000, None)
@@ -164,12 +184,12 @@ print("\n")
 
 no_constraint_ac = get_best_path(test, Node("a"), Node("c"), [], 10, 1000, None)
 print("Answer:    " + str(no_constraint_ac))
-print("Should be: (['a', 'b', 'c'], 11, 10)")
+print("Should be: (['a', 'b', 'c'], 11)")
 print("\n")
 
 constraint_ac = get_best_path(test, Node("a"), Node("c"), [], 5, 1000, None)
 print("Answer:    " + str(constraint_ac))
-print("Should be: (['a', 'c'], 12, 2)")
+print("Should be: (['a', 'c'], 12)")
 
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
