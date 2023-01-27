@@ -1,7 +1,7 @@
 # Problem Set 4: Simulating the Spread of Disease and Bacteria Population Dynamics
 # Name: Aloisio Valerio
 # Collaborators (Discussion): None
-# Time: Started 1:30
+# Time: 15 min
 
 import math
 import numpy as np
