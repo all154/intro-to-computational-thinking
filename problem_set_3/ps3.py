@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Problem Set 3: Simulating robots
-# Name:
+# Name: Aloisio Valerio
 # Collaborators (discussion):
-# Time:
+# Time: Started 10:30
 
 import math
 import random
