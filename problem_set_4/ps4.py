@@ -8,6 +8,7 @@ import numpy as np
 import pylab as pl
 import random
 
+random.seed(0)
 
 ##########################
 # End helper code
@@ -100,7 +101,10 @@ class SimpleBacteria(object):
         Returns:
             bool: True with probability self.death_prob, False otherwise.
         """
-        pass  # TODO
+        if random.ramdom() < self.death_prob:
+            return True
+        else:
+            return False
 
     def reproduce(self, pop_density):
         """
@@ -128,7 +132,10 @@ class SimpleBacteria(object):
         Raises:
             NoChildException if this bacteria cell does not reproduce.
         """
-        pass  # TODO
+        if random.ramdom() < self.birth_prob * (1 - pop_density):
+            return SimpleBacteria(self.birth_prob, self.death_prob)
+        else:
+            raise NoChildException
 
 
 class Patient(object):
@@ -478,6 +485,7 @@ def simulation_with_antibiotic(num_bacteria,
 
 # When you are ready to run the simulations, uncomment the next lines one
 # at a time
+'''
 total_pop, resistant_pop = simulation_with_antibiotic(num_bacteria=100,
                                                       max_pop=1000,
                                                       birth_prob=0.3,
@@ -493,3 +501,4 @@ total_pop, resistant_pop = simulation_with_antibiotic(num_bacteria=100,
                                                       resistant=False,
                                                       mut_prob=0.8,
                                                       num_trials=50)
+'''
