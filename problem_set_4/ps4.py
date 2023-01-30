@@ -150,7 +150,8 @@ class Patient(object):
             max_pop (int): Maximum possible bacteria population size for
                 this patient
         """
-        pass  # TODO
+        self.bacteria = bacteria
+        self.max_pop = max_pop
 
     def get_total_pop(self):
         """
@@ -159,7 +160,7 @@ class Patient(object):
         Returns:
             int: The total bacteria population
         """
-        pass  # TODO
+        return len(self.bacteria)
 
     def update(self):
         """
@@ -185,7 +186,22 @@ class Patient(object):
         Returns:
             int: The total bacteria population at the end of the update
         """
-        pass  # TODO
+        survived = []
+        '''
+
+        for bact in self.bacteria:
+            if not dead:
+                survived.append(bact)
+        
+        current_dens = len(survived)/self.max_pop
+
+        for bact in survived:
+            offspring.append(bact.reproduce())
+
+        
+
+
+        '''
 
 
 ##########################
