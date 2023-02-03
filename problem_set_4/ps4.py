@@ -275,6 +275,16 @@ def simulation_without_antibiotic(num_bacteria,
             number of bacteria in trial i at time step j
     """
     pass  # TODO
+    '''
+    pop = []
+
+    for i in range(num_bacteria):
+        pop.append(SimpleBacteria(birth_prob, death_prob))
+
+    p = Patient(pop, max_pop)
+
+    (Update 300 times) num_trials times
+    '''
 
 
 # When you are ready to run the simulation, uncomment the next line
