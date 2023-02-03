@@ -187,7 +187,7 @@ class Patient(object):
             int: The total bacteria population at the end of the update
         """
         survived = []
-        '''
+        offspring = []
 
         for bact in self.bacteria:
             if not dead:
@@ -198,10 +198,9 @@ class Patient(object):
         for bact in survived:
             offspring.append(bact.reproduce())
 
-        
+        self.bacteria = survived + offspring
 
-
-        '''
+        return len(self.bacteria)
 
 
 ##########################
