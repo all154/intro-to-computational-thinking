@@ -8,7 +8,7 @@ import numpy as np
 import pylab as pl
 import random
 
-#random.seed(0)
+random.seed(0)
 
 ##########################
 # End helper code
@@ -239,8 +239,7 @@ def calc_pop_avg(populations, n):
     Returns:
         float: The average bacteria population size at time step n
     """
-    pass  # TODO
-
+    return sum(populations)/n
 
 def simulation_without_antibiotic(num_bacteria,
                                   max_pop,
