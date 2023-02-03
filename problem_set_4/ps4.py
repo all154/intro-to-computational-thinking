@@ -79,6 +79,9 @@ def make_two_curve_plot(x_coords,
 # PROBLEM 1
 ##########################
 
+class NoChildException(Exception):
+    pass
+
 class SimpleBacteria(object):
     """A simple bacteria cell with no antibiotic resistance"""
 
