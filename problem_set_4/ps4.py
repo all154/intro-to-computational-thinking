@@ -195,18 +195,31 @@ class Patient(object):
         offspring = []
 
         for bact in self.bacteria:
-            if not dead:
+            if not bact.is_killed():
                 survived.append(bact)
         
-        current_dens = len(survived)/self.max_pop
+        current_density = len(survived)/self.max_pop
 
         for bact in survived:
-            offspring.append(bact.reproduce())
+            try:
+                offspring.append(bact.reproduce(current_density))
+            except NoChildException:
+                continue
 
         self.bacteria = survived + offspring
 
         return len(self.bacteria)
+'''
+a = SimpleBacteria(1, 0.5)
+b = SimpleBacteria(0.5, 0.5)
 
+p = Patient([a, b], 10)
+
+print(p.get_total_pop())
+
+print(p.update())
+
+print(p.update())'''
 
 ##########################
 # PROBLEM 2
