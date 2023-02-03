@@ -8,7 +8,7 @@ import numpy as np
 import pylab as pl
 import random
 
-random.seed(0)
+#random.seed(0)
 
 ##########################
 # End helper code
@@ -101,7 +101,7 @@ class SimpleBacteria(object):
         Returns:
             bool: True with probability self.death_prob, False otherwise.
         """
-        if random.ramdom() < self.death_prob:
+        if random.random() < self.death_prob:
             return True
         else:
             return False
@@ -132,11 +132,16 @@ class SimpleBacteria(object):
         Raises:
             NoChildException if this bacteria cell does not reproduce.
         """
-        if random.ramdom() < self.birth_prob * (1 - pop_density):
+        if random.random() < self.birth_prob * (1 - pop_density):
             return SimpleBacteria(self.birth_prob, self.death_prob)
         else:
             raise NoChildException
-
+'''
+a = SimpleBacteria(1, 0.5)
+test = a.is_killed()
+print(test)
+if test:
+    print(a.reproduce(0.5))'''
 
 class Patient(object):
     """
