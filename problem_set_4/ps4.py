@@ -1,7 +1,7 @@
 # Problem Set 4: Simulating the Spread of Disease and Bacteria Population Dynamics
 # Name: Aloisio Valerio
 # Collaborators (Discussion): None
-# Time: 15 min
+# Time: 1h30 min
 
 import math
 import numpy as np
@@ -274,7 +274,6 @@ def simulation_without_antibiotic(num_bacteria,
         populations (list of lists or 2D array): populations[i][j] is the
             number of bacteria in trial i at time step j
     """
-    # TODO
     data = []
 
     for i in range(num_trials):
@@ -305,7 +304,7 @@ def simulation_without_antibiotic(num_bacteria,
     make_one_curve_plot(range(300), avg_population, "Timestep", "Average Population", "Without Antibiotic")
 
 # When you are ready to run the simulation, uncomment the next line
-populations = simulation_without_antibiotic(100, 1000, 0.1, 0.025, 50)
+# populations = simulation_without_antibiotic(100, 1000, 0.1, 0.025, 50)
 
 ##########################
 # PROBLEM 3
