@@ -447,8 +447,24 @@ class ResistantBacteria(SimpleBacteria):
             as this bacteria. Otherwise, raises a NoChildException if this
             bacteria cell does not reproduce.
         """
-        pass  # TODO
+        if random.random() < self.birth_prob * (1 - pop_density):
+            if self.resistant:
+                return ResistantBacteria(self.birth_prob, self.death_prob, self.resistant, self.mut_prob)
+            else:
+                if random.random() < self.mut_prob * (1-pop_density):
+                    return ResistantBacteria(self.birth_prob, self.death_prob, True, self.mut_prob)
+                else:
+                    return ResistantBacteria(self.birth_prob, self.death_prob, False, self.mut_prob)
+        else:
+            raise NoChildException
 
+'''
+a = ResistantBacteria(1, 1, False, 0.9)
+#print(a.get_resistant())
+b = a.reproduce(0.5)
+print(b)
+print(b.get_resistant())
+'''
 
 class TreatedPatient(Patient):
     """
