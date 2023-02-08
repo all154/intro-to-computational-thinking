@@ -335,12 +335,9 @@ def calc_pop_std(populations, t):
         float: the standard deviation of populations across different trials at
              a specific time step
     """
-    # TODO
-    mean = 0
-    for i in range(len(populations)):
-        mean += populations[i][t]/len(populations)
-    
+    mean = calc_pop_avg(populations, t)
     variance = 0
+
     for i in range(len(populations)):
         variance += ((populations[i][t] - mean)**2)/len(populations)
 
