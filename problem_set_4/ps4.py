@@ -138,12 +138,7 @@ class SimpleBacteria(object):
             return SimpleBacteria(self.birth_prob, self.death_prob)
         else:
             raise NoChildException
-'''
-a = SimpleBacteria(1, 0.5)
-test = a.is_killed()
-print(test)
-if test:
-    print(a.reproduce(0.5))'''
+
 
 class Patient(object):
     """
@@ -211,17 +206,7 @@ class Patient(object):
         self.bacteria = survived + offspring
 
         return len(self.bacteria)
-'''
-a = SimpleBacteria(1, 0.5)
-b = SimpleBacteria(0.5, 0.5)
 
-p = Patient([a, b], 10)
-
-print(p.get_total_pop())
-
-print(p.update())
-
-print(p.update())'''
 
 ##########################
 # PROBLEM 2
@@ -463,13 +448,6 @@ class ResistantBacteria(SimpleBacteria):
         else:
             raise NoChildException
 
-'''
-a = ResistantBacteria(1, 1, False, 0.9)
-#print(a.get_resistant())
-b = a.reproduce(0.5)
-print(b)
-print(b.get_resistant())
-'''
 
 class TreatedPatient(Patient):
     """
