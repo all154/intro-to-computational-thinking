@@ -307,6 +307,8 @@ def simulation_without_antibiotic(num_bacteria,
 
     make_one_curve_plot(range(300), avg_population, "Timestep", "Average Population", "Without Antibiotic")
 
+    return data
+
 # When you are ready to run the simulation, uncomment the next line
 # populations = simulation_without_antibiotic(100, 1000, 0.1, 0.025, 50)
 
