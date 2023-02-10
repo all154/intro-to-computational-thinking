@@ -605,7 +605,58 @@ def simulation_with_antibiotic(num_bacteria,
             resistant_pop[i][j] is the number of resistant bacteria for
             trial i at time step j
     """
-    pass  # TODO
+    data_pop = []
+    data_resist_pop = []
+
+    for i in range(num_trials):
+        bact = ResistantBacteria(birth_prob, death_prob, resistant, mut_prob)
+
+        pop = [bact] * num_bacteria
+
+        tp = TreatedPatient(pop, max_pop)
+
+        records_pop = []
+        records_resist_pop = []
+
+        for j in range(150):
+            if j == 0:
+                records_pop.append(num_bacteria)
+                records_resist_pop.append(tp.get_resist_pop())
+
+            else:
+                records_pop.append(tp.update())
+                records_resist_pop.append(tp.get_resist_pop())
+        
+        tp.set_on_antibiotic()
+
+        for j in range(250):
+            records_pop.append(tp.update())
+            records_resist_pop.append(tp.get_resist_pop())
+        
+        data_pop.append(records_pop)
+        data_resist_pop.append(records_resist_pop)
+    
+    avg_population = np.zeros(400)
+    avg_resist_population = np.zeros(400)
+
+    for i in range(400):
+        for j in range(num_trials):
+            avg_population[i] += data_pop[j][i]
+            avg_resist_population[i] += data_resist_pop[j][i]
+        
+    avg_population = avg_population/num_trials
+    avg_resist_population = avg_resist_population/num_trials
+
+    make_two_curve_plot(range(400),
+                        avg_population,
+                        avg_resist_population,
+                        "Total",
+                        "Resistant",
+                        "Timestep",
+                        "Average Population",
+                        "With an Antibiotic")
+    
+    return (data_pop, data_resist_pop)
 
 
 # When you are ready to run the simulations, uncomment the next lines one
